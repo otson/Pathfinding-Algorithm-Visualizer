@@ -6,6 +6,8 @@ div {
   -khtml-user-select: none;
   -webkit-user-select: none;
   -o-user-select: none;
+  width: 25px;
+  height: 25px;
 }
 
 .wall {
