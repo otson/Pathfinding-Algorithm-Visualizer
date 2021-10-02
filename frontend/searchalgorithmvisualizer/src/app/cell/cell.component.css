@@ -7,3 +7,7 @@ div {
   -webkit-user-select: none;
   -o-user-select: none;
 }
+
+.wall {
+  background-color: dimgray;
+}
