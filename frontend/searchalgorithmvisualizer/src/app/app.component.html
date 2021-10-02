@@ -1,7 +1,12 @@
-<table align="center" style="width:80%">
-  <tr *ngFor="let item of [].constructor(40); let i = index">
-    <td *ngFor="let item of [].constructor(60); let j = index">
-       <app-cell></app-cell>
-    </td>
-  </tr>
-</table>
+<div (mousedown)="startPainting()" (mouseup)="stopPainting()">
+  <table align="center" style="width:80%">
+    <tr *ngFor="let item of [].constructor(40); let i = index">
+      <td *ngFor="let item of [].constructor(60); let j = index">
+        <app-cell></app-cell>
+      </td>
+    </tr>
+  </table>
+</div>
+
+
+
