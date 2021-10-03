@@ -30,6 +30,7 @@ export class CellComponent implements OnInit {
   }
 
   flipWall(){
+    if(this.isStart || this.isEnd) return;
     this.isWall = !this.isWall;
     this.pathfinderService.getMap()[this.row][this.column].isWall = this.isWall
   }

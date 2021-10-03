@@ -65,7 +65,6 @@ export class PathfinderService {
       this.processNeighbor(parent, parent.row, parent.column+1, q);
       this.processNeighbor(parent, parent.row, parent.column-1, q);
     }
-    console.log("Path length: "+response.path.length);
     return response;
   }
 
