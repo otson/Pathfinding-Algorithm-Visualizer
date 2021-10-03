@@ -16,9 +16,12 @@ export class TopbarComponent implements OnInit {
 
   solveDijkstra() {
     let solution: Cell[]  = this.pathfinderService.solveDijkstra([]);
-    for(let cell of solution){
-      let elem = document.getElementById(cell.column+"-"+cell.row);
-      elem?.classList.add('visited');
+    for(let i = 0; i < solution.length; i++){
+      setTimeout(function () {
+        let cell = solution[i];
+        let elem = document.getElementById(cell.column+"-"+cell.row);
+        elem?.classList.add('visited');
+      }, 100 * i);
     }
   }
 }
