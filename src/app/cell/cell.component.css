@@ -49,10 +49,6 @@ div {
     transform: scale(0.5);
     background-color: #00526a;
   }
-  0% {
-    transform: scale(0.5);
-    background-color: #00526a;
-  }
 
   50% {
     transform: scale(1.2);
