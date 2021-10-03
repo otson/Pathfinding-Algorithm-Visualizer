@@ -13,3 +13,7 @@ div {
 .wall {
   background-color: dimgray;
 }
+
+.visited {
+  background-color: darkgreen;
+}

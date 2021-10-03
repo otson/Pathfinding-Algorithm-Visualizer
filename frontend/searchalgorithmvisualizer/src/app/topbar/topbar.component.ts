@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {PathfinderService} from "../pathfinder.service";
+import {Cell} from "../shared/cell.model";
 
 @Component({
   selector: 'app-topbar',
@@ -14,6 +15,10 @@ export class TopbarComponent implements OnInit {
   }
 
   solveDijkstra() {
-    this.pathfinderService.solveDijkstra([]);
+    let solution: Cell[]  = this.pathfinderService.solveDijkstra([]);
+    for(let cell of solution){
+      let elem = document.getElementById(cell.column+"-"+cell.row);
+      elem?.classList.add('visited');
+    }
   }
 }
