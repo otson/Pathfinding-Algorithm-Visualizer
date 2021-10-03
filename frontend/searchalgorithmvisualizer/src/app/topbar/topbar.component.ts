@@ -19,6 +19,7 @@ export class TopbarComponent implements OnInit {
     for(let i = 0; i < solution.length; i++){
       setTimeout(function () {
         let cell = solution[i];
+        if(cell.isWall) console.log("found a wall");
         let elem = document.getElementById(cell.column+"-"+cell.row);
         elem?.classList.add('visited');
       }, 25 * i);

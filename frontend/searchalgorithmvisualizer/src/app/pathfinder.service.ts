@@ -43,19 +43,28 @@ export class PathfinderService {
         }
       }
     }
-    let q: (Cell | undefined)[] = [];
+    let q: Cell[] = [];
     q.push(start);
     while(q.length != 0){
-      let cell: Cell = q.shift()!;
-      if(cell == undefined || cell.isVisited) continue;
-      cell.isVisited = true;
-      response.push(cell);
-      if(cell.isEnd) break;
-      if(cell.row != 0) q.push(this.map[cell.row-1][cell.column]);
-      if(cell.row != this.rows -1) q.push(this.map[cell.row+1][cell.column]);
-      if(cell.column != 0) q.push(this.map[cell.row][cell.column-1]);
-      if(cell.column != this.columns -1) q.push(this.map[cell.row][cell.column+1]);
+      let parent: Cell = q.shift()!;
+      if(parent.isVisited) continue;
+      parent.isVisited = true;
+      response.push(parent);
+      if(parent.isEnd) break;
+
+      this.processNeighbor(parent, parent.row+1, parent.column, q);
+      this.processNeighbor(parent, parent.row-1, parent.column, q);
+      this.processNeighbor(parent, parent.row, parent.column+1, q);
+      this.processNeighbor(parent, parent.row, parent.column-1, q);
     }
     return response;
+  }
+
+  private processNeighbor(parent: Cell, row: number, column: number, q : Cell[]){
+    if(row < 0 || column < 0 || row >= this.rows || column >= this.columns) return;
+    let child = this.map[row][column];
+    if(child.isVisited || child.isWall) return;
+    child.parent = parent;
+    q.push(child);
   }
 }

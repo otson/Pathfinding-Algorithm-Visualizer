@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {AppService} from "../app.service";
+import {PathfinderService} from "../pathfinder.service";
 
 @Component({
   selector: 'app-cell',
@@ -13,18 +14,29 @@ export class CellComponent implements OnInit {
   @Input() public isStart: boolean = false;
   @Input() public isEnd: boolean = false;
 
-  constructor(private appService: AppService) { }
+  constructor(private appService: AppService, private pathfinderService: PathfinderService) { }
 
   ngOnInit(): void {
   }
 
   mouseEnter() {
     if(this.appService.isPainting){
-      this.isWall = !this.isWall;
+      this.flipWall();
     }
+  }
+
+  mouseDown() {
+    this.flipWall();
+  }
+
+  flipWall(){
+    this.isWall = !this.isWall;
+    this.pathfinderService.getMap()[this.row][this.column].isWall = this.isWall
   }
 
   getId() {
     return this.column + "-" +this.row;
   }
+
+
 }
