@@ -1,2 +1,3 @@
-<div (mousedown)="isWall =! isWall" (mouseover)="mouseEnter()" [ngClass]="isWall ? 'wall' : 'normal'"
+<div (mousedown)="isWall =! isWall" (mouseover)="mouseEnter()"
+     [ngClass]="{'wall': isWall, 'normal': !isWall, 'start' : isStart, 'end' : isEnd}"
 [id]="getId()">x</div>

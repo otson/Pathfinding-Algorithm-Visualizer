@@ -14,7 +14,11 @@ export class PathfinderService {
     for(let row = 0; row < this.rows; row++){
       let currRow = [];
       for(let column = 0; column < this.columns; column++){
-        currRow.push(new Cell(column, row));
+        currRow.push(
+          new Cell(column, row,
+            row == Math.trunc(this.rows / 2) && column == Math.trunc(this.columns / 4),
+            row == Math.trunc(this.rows / 2) && column == Math.trunc(this.columns / 4 * 3))
+        );
       }
       this.map.push(currRow);
     }
