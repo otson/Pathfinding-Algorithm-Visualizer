@@ -14,8 +14,8 @@ export class TopbarComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  solveDijkstra() {
-    let solution: Cell[]  = this.pathfinderService.solveDijkstra([]);
+  solveBreadthFirst() {
+    let solution: Cell[]  = this.pathfinderService.solveBreadthFirst();
     for(let i = 0; i < solution.length; i++){
       setTimeout(function () {
         let cell = solution[i];

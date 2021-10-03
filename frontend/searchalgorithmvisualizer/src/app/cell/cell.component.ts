@@ -25,6 +25,6 @@ export class CellComponent implements OnInit {
   }
 
   getId() {
-    return this.row + "-" +this.column;
+    return this.column + "-" +this.row;
   }
 }
