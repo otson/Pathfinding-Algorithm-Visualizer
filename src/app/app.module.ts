@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { CellComponent } from './cell/cell.component';
 import { TopbarComponent } from './topbar/topbar.component';
+import {CommonModule} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -12,7 +13,8 @@ import { TopbarComponent } from './topbar/topbar.component';
     TopbarComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    CommonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

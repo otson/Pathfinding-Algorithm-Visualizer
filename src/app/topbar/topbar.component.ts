@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {PathfinderService} from "../pathfinder.service";
-import {Cell} from "../shared/cell.model";
 import {Response} from "../shared/response.model";
 
 @Component({
   selector: 'app-topbar',
   templateUrl: './topbar.component.html',
-  styleUrls: ['./topbar.component.css']
+  styleUrls: ['./topbar.component.css'],
 })
 export class TopbarComponent implements OnInit {
 

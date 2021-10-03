@@ -15,11 +15,11 @@ div {
 }
 
 .end {
-  background-color: rebeccapurple;
+  background-color: mediumpurple;
 }
 
 .wall {
-  background-color: dimgray;
+  background-color: #242424;
 }
 
 .visited:not(.start):not(.end) {
