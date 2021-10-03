@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Cell} from "./shared/cell.model";
+import {Response} from "./shared/response.model";
 
 @Injectable({
   providedIn: 'root'
@@ -32,8 +33,8 @@ export class PathfinderService {
    * Takes as an input a 2D grid of cells for which a path is to be found.
    * Returns an array of cells in the order in which they were visited when solving.
    */
-  public solveBreadthFirst(): Cell[]{
-    const response: Cell[] = [];
+  public solveBreadthFirst(): Response{
+    const response = new Response();
     let start!: Cell;
     for(let i = 0; i < this.map.length; i++){
       for(let j = 0; j < this.map[i].length; j++){
@@ -49,14 +50,22 @@ export class PathfinderService {
       let parent: Cell = q.shift()!;
       if(parent.isVisited) continue;
       parent.isVisited = true;
-      response.push(parent);
-      if(parent.isEnd) break;
+      response.traversal.push(parent);
+      if(parent.isEnd) {
+        while(true){
+          response.path.push(parent);
+          if(parent.parent == undefined) break;
+          parent = parent.parent;
+        }
+        break;
+      }
 
       this.processNeighbor(parent, parent.row+1, parent.column, q);
       this.processNeighbor(parent, parent.row-1, parent.column, q);
       this.processNeighbor(parent, parent.row, parent.column+1, q);
       this.processNeighbor(parent, parent.row, parent.column-1, q);
     }
+    console.log("Path length: "+response.path.length);
     return response;
   }
 

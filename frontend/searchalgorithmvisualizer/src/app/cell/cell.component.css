@@ -15,14 +15,14 @@ div {
 }
 
 .end {
-  background-color: chartreuse;
+  background-color: rebeccapurple;
 }
 
 .wall {
   background-color: dimgray;
 }
 
-.visited {
+.visited:not(.start):not(.end) {
   animation-name: visitedAnimation;
   animation-duration: 0.5s;
   animation-timing-function: ease-out;
@@ -31,6 +31,10 @@ div {
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
   animation-play-state: running;
+}
+
+.path:not(.start):not(.end) {
+  background-color: deepskyblue;
 }
 
 @keyframes visitedAnimation {

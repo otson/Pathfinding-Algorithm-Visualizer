@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {PathfinderService} from "../pathfinder.service";
 import {Cell} from "../shared/cell.model";
+import {Response} from "../shared/response.model";
 
 @Component({
   selector: 'app-topbar',
@@ -15,14 +16,22 @@ export class TopbarComponent implements OnInit {
   }
 
   solveBreadthFirst() {
-    let solution: Cell[]  = this.pathfinderService.solveBreadthFirst();
-    for(let i = 0; i < solution.length; i++){
+    let solution: Response = this.pathfinderService.solveBreadthFirst();
+    for(let i = 0; i < solution.traversal.length; i++){
       setTimeout(function () {
-        let cell = solution[i];
-        if(cell.isWall) console.log("found a wall");
+        let cell = solution.traversal[i];
         let elem = document.getElementById(cell.column+"-"+cell.row);
         elem?.classList.add('visited');
       }, 25 * i);
+      if(i == solution.traversal.length -1){
+        for(let j = 0; j < solution.path.length; j++){
+          setTimeout(function () {
+            let cell = solution.path[j];
+            let elem = document.getElementById(cell.column+"-"+cell.row);
+            elem?.classList.replace('visited','path');
+          }, 25 * (j+i));
+        }
+      }
     }
   }
 }
