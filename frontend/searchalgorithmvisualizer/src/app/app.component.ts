@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {AppService} from "./app.service";
+import {PathfinderService} from "./pathfinder.service";
 
 @Component({
   selector: 'app-root',
@@ -8,7 +9,11 @@ import {AppService} from "./app.service";
 })
 export class AppComponent {
 
-  constructor(private appService: AppService) {
+  constructor(private appService: AppService, private pathfinderService: PathfinderService) {
+  }
+
+  public getMap(){
+    return this.pathfinderService.getMap();
   }
 
   stopPainting() {

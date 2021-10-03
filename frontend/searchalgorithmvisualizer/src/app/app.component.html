@@ -1,8 +1,9 @@
 <div (mousedown)="startPainting()" (mouseup)="stopPainting()">
+  <app-topbar></app-topbar>
   <table cellspacing=0 border=0 align="center">
-    <tr *ngFor="let item of [].constructor(35)">
-      <td *ngFor="let item of [].constructor(55)">
-        <app-cell></app-cell>
+    <tr *ngFor="let row of getMap()">
+      <td *ngFor="let cell of row">
+        <app-cell [column]="cell.column" [row]="cell.row"></app-cell>
       </td>
     </tr>
   </table>

@@ -1,3 +1,3 @@
 export class Cell{
-  constructor(public x: number, public y: number){};
+  constructor(public column: number, public row: number){};
 }

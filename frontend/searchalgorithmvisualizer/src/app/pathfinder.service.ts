@@ -6,7 +6,23 @@ import {Cell} from "./shared/cell.model";
 })
 export class PathfinderService {
 
-  constructor() { }
+  private rows: number = 35;
+  private columns: number = 55;
+  private map: Cell[][] = [];
+
+  constructor() {
+    for(let row = 0; row < this.rows; row++){
+      let currRow = [];
+      for(let column = 0; column < this.columns; column++){
+        currRow.push(new Cell(column, row));
+      }
+      this.map.push(currRow);
+    }
+  }
+
+  public getMap(){
+    return this.map;
+  }
 
   /**
    * Takes as an input a 2D grid of cells for which a path is to be found.

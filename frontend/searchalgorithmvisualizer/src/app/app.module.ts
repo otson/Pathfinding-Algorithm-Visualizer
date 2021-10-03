@@ -3,11 +3,13 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { CellComponent } from './cell/cell.component';
+import { TopbarComponent } from './topbar/topbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CellComponent
+    CellComponent,
+    TopbarComponent
   ],
   imports: [
     BrowserModule

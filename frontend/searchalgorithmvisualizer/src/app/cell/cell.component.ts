@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {AppService} from "../app.service";
 
 @Component({
@@ -7,7 +7,9 @@ import {AppService} from "../app.service";
   styleUrls: ['./cell.component.css']
 })
 export class CellComponent implements OnInit {
-  isWall: boolean = false;
+  public isWall: boolean = false;
+  @Input() public row: number = 0;
+  @Input() public column: number = 0;
 
   constructor(private appService: AppService) { }
 
@@ -18,5 +20,9 @@ export class CellComponent implements OnInit {
     if(this.appService.isPainting){
       this.isWall = !this.isWall;
     }
+  }
+
+  getId() {
+    return this.row + "-" +this.column;
   }
 }
