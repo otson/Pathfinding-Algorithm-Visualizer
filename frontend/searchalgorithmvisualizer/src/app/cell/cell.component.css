@@ -15,5 +15,34 @@ div {
 }
 
 .visited {
-  background-color: darkgreen;
+  animation-name: visitedAnimation;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-out;
+  animation-delay: 0;
+  animation-direction: alternate;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+}
+
+@keyframes visitedAnimation {
+  0% {
+    transform: scale(0.1);
+    background-color: rgba(4, 66, 0, 0.75);
+    border-radius: 100%;
+  }
+
+  50% {
+    background-color: rgba(24, 217, 17, 0.75);
+  }
+
+  75% {
+    transform: scale(1.4);
+    background-color: rgba(0, 217, 98, 0.75);
+  }
+
+  100% {
+    transform: scale(1);
+    background-color: rgba(0, 218, 200, 0.75);
+  }
 }
