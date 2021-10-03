@@ -21,7 +21,7 @@ export class TopbarComponent implements OnInit {
         let cell = solution[i];
         let elem = document.getElementById(cell.column+"-"+cell.row);
         elem?.classList.add('visited');
-      }, 100 * i);
+      }, 25 * i);
     }
   }
 }

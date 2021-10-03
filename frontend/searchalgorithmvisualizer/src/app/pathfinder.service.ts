@@ -30,9 +30,11 @@ export class PathfinderService {
    */
   public solveDijkstra(cells:Cell[][]): Cell[]{
     const response = [];
-    response.push(new Cell(2,3));
-    response.push(new Cell(3,3));
-    response.push(new Cell(3,4));
+    for(let i = 0; i < this.rows; i++){
+      for(let j = 0; j < this.columns; j++){
+        response.push(new Cell(i,j));
+      }
+    }
     return response;
   }
 }
