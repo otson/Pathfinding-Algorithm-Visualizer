@@ -28,21 +28,21 @@ div {
 @keyframes visitedAnimation {
   0% {
     transform: scale(0.1);
-    background-color: rgba(4, 66, 0, 0.75);
+    background-color: rgba(227, 0, 0, 0.75);
     border-radius: 100%;
   }
 
   50% {
-    background-color: rgba(24, 217, 17, 0.75);
+    background-color: rgba(224, 239, 15, 0.75);
   }
 
   75% {
     transform: scale(1.4);
-    background-color: rgba(0, 217, 98, 0.75);
+    background-color: rgba(116, 217, 0, 0.75);
   }
 
   100% {
     transform: scale(1);
-    background-color: rgba(0, 218, 200, 0.75);
+    background-color: rgba(90, 245, 56, 0.75);
   }
 }
