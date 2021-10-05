@@ -11,26 +11,35 @@ export class TopbarComponent implements OnInit {
 
   constructor(private pathfinderService: PathfinderService) { }
 
+  private timeouts: number[] = [];
+
   ngOnInit(): void {
   }
 
   solveBreadthFirst() {
     let solution: Response = this.pathfinderService.solveBreadthFirst();
     for(let i = 0; i < solution.traversal.length; i++){
-      setTimeout(function () {
+      this.timeouts.push(setTimeout(function () {
         let cell = solution.traversal[i];
         let elem = document.getElementById(cell.column+"-"+cell.row);
         elem?.classList.add('visited');
-      }, 25 * i);
+      }, 25 * i));
       if(i == solution.traversal.length -1){
         for(let j = 0; j < solution.path.length; j++){
-          setTimeout(function () {
+          this.timeouts.push(setTimeout(function () {
             let cell = solution.path[j];
             let elem = document.getElementById(cell.column+"-"+cell.row);
-            elem?.classList.replace('visited','path');
-          }, 25 * (j+i));
+            elem?.classList.add('visited','path');
+          }, 25 * i + 50 * j));
         }
       }
+    }
+  }
+
+  reset() {
+    this.pathfinderService.setup();
+    while(this.timeouts.length > 0){
+      clearTimeout(this.timeouts.pop());
     }
   }
 }
