@@ -23,7 +23,10 @@ export class PathfinderService {
         currRow.push(
           new Cell(column, row,
             row == Math.trunc(this.rows / 2) && column == Math.trunc(this.columns / 4),
-            row == Math.trunc(this.rows / 2) && column == Math.trunc(this.columns / 4 * 3))
+            row == Math.trunc(this.rows / 2) && column == Math.trunc(this.columns / 4 * 3),
+            false, undefined,
+            Math.trunc(this.rows / 4) < row && Math.trunc(this.rows / 4 * 3) > row && column == Math.trunc(this.columns / 2)
+          )
         );
       }
       this.map.push(currRow);

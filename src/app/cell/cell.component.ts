@@ -8,7 +8,7 @@ import {PathfinderService} from "../pathfinder.service";
   styleUrls: ['./cell.component.css']
 })
 export class CellComponent implements OnInit {
-  public isWall: boolean = false;
+  @Input() public isWall: boolean = false;
   @Input() public row: number = 0;
   @Input() public column: number = 0;
   @Input() public isStart: boolean = false;
