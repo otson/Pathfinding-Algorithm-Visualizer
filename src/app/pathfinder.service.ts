@@ -33,8 +33,72 @@ export class PathfinderService {
     }
   }
 
-  public getMap(){
+  public getMap() {
     return this.map;
+  }
+
+  public solveAStar(): Response {
+    function heuristic(start: Cell) {
+      return Math.abs(start.column - end.column) +
+        Math.abs(start.row -end.row);
+    }
+
+    function getNeighbors(curr: Cell, map: Cell[][]){
+      let neighbors = [];
+      if(curr.row > 0) neighbors.push(map[curr.row-1][curr.column]);
+      if(curr.row < map.length - 1) neighbors.push(map[curr.row+1][curr.column]);
+      if(curr.column > 0) neighbors.push(map[curr.row][curr.column-1]);
+      if(curr.column < map[0].length - 1) neighbors.push(map[curr.row][curr.column+1]);
+      return neighbors;
+    }
+
+    const response = new Response();
+    let start = this.getStart();
+    let end = this.getEnd();
+    let openSet: Cell[] = [];
+    let gScore = new Map();
+    let fScore = new Map();
+    for(let row = 0; row < this.rows; row++) {
+      for (let column = 0; column < this.columns; column++) {
+        gScore.set(this.map[row][column], Infinity);
+        fScore.set(this.map[row][column], Infinity);
+      }
+    }
+    openSet.push(start);
+    gScore.set(start, 0);
+    fScore.set(start, heuristic(start));
+    while(openSet.length > 0){
+      // get node with lowest f value;
+      let curr = openSet[0];
+      if(curr === end){
+        while(curr.parent != undefined){
+          response.path.push(curr);
+          curr = curr.parent;
+        }
+        break;
+      }
+      for(let i = 1; i < openSet.length; i++){
+        if(fScore.get(curr) > fScore.get(openSet[i])){
+          curr = openSet[i];
+        }
+      }
+      openSet = openSet.filter((item) => item !== curr);
+      for(let neighbor of getNeighbors(curr, this.map)){
+        if(neighbor.isWall) continue;
+        let tentativeGScore = gScore.get(curr) + 1;
+        if(tentativeGScore < gScore.get(neighbor)){
+          neighbor.parent = curr;
+          gScore.set(neighbor, tentativeGScore);
+          fScore.set(neighbor, tentativeGScore + heuristic(neighbor));
+          if(openSet.filter((item) => item === curr).length == 0){
+            response.traversal.push(neighbor);
+            openSet.push(neighbor);
+          }
+        }
+      }
+    }
+
+    return response;
   }
 
   /**
@@ -43,7 +107,7 @@ export class PathfinderService {
    */
   public solveBreadthFirst(): Response{
     const response = new Response();
-    let start!: Cell;
+    let start: Cell = this.getStart();
     for(let i = 0; i < this.map.length; i++){
       for(let j = 0; j < this.map[i].length; j++){
         if(this.map[i][j].isStart) {
@@ -73,6 +137,27 @@ export class PathfinderService {
       this.processNeighbor(parent, parent.row, parent.column-1, q);
     }
     return response;
+  }
+
+  private getStart(){
+    for(let i = 0; i < this.map.length; i++){
+      for(let j = 0; j < this.map[i].length; j++){
+        if(this.map[i][j].isStart) {
+          return this.map[i][j];
+        }
+      }
+    }
+    return this.map[0][0];
+  }
+  private getEnd(){
+    for(let i = 0; i < this.map.length; i++){
+      for(let j = 0; j < this.map[i].length; j++){
+        if(this.map[i][j].isEnd) {
+          return this.map[i][j];
+        }
+      }
+    }
+    return this.map[0][0];
   }
 
   private processNeighbor(parent: Cell, row: number, column: number, q : Cell[]){

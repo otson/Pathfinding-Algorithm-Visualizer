@@ -17,7 +17,14 @@ export class TopbarComponent implements OnInit {
   }
 
   solveBreadthFirst() {
-    let solution: Response = this.pathfinderService.solveBreadthFirst();
+    this.animate(this.pathfinderService.solveBreadthFirst());
+  }
+
+  solveAStar() {
+    this.animate((this.pathfinderService.solveAStar()));
+  }
+
+  private animate(solution: Response){
     for(let i = 0; i < solution.traversal.length; i++){
       this.timeouts.push(setTimeout(function () {
         let cell = solution.traversal[i];
@@ -42,4 +49,6 @@ export class TopbarComponent implements OnInit {
       clearTimeout(this.timeouts.pop());
     }
   }
+
+
 }
