@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Cell} from "./shared/cell.model";
 import {Response} from "./shared/response.model";
+import {MazeGeneratorService} from "./maze-generator.service";
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class PathfinderService {
   private columns: number = 25;
   private map: Cell[][] = [];
 
-  constructor() {
+  constructor(private mazeGeneratorService: MazeGeneratorService) {
     this.setup();
   }
 
@@ -177,4 +178,18 @@ export class PathfinderService {
   }
 
 
+  generateMaze() {
+    let start = this.getStart();
+    let maze = this.mazeGeneratorService.generateMaze(start.column, start.row, this.columns, this.rows);
+    console.log(maze);
+    for(let i = 1; i < this.map.length-1; i++){
+      for(let j = 1; j < this.map[i].length-1; j++) {
+        if(!this.map[i][j].isEnd && maze[i][j] != 0) continue;
+        if(maze[i][j] == 0) this.map[i][j+1].isWall = true;
+        if(maze[i][j] == 5) this.map[i+1][j].isWall = true;
+        if(maze[i][j] == 15) this.map[i-1][j].isWall = true;
+        if(maze[i][j] == 20) this.map[i][j-1].isWall = true;
+      }
+    }
+  }
 }

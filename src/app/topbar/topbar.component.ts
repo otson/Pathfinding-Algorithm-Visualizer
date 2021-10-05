@@ -16,6 +16,10 @@ export class TopbarComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  public generateMaze(){
+    return this.pathfinderService.generateMaze();
+  }
+
   solveBreadthFirst() {
     this.reset();
     this.animate(this.pathfinderService.solveBreadthFirst());
