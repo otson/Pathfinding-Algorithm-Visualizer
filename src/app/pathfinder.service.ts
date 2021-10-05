@@ -43,12 +43,11 @@ export class PathfinderService {
    */
   public solveBreadthFirst(): Response{
     const response = new Response();
-    const map = JSON.parse(JSON.stringify(this.map));
     let start!: Cell;
-    for(let i = 0; i < map.length; i++){
-      for(let j = 0; j < map[i].length; j++){
-        if(map[i][j].isStart) {
-          start = map[i][j];
+    for(let i = 0; i < this.map.length; i++){
+      for(let j = 0; j < this.map[i].length; j++){
+        if(this.map[i][j].isStart) {
+          start = this.map[i][j];
           break;
         }
       }
@@ -68,19 +67,21 @@ export class PathfinderService {
         break;
       }
 
-      this.processNeighbor(parent, parent.row+1, parent.column, q, map);
-      this.processNeighbor(parent, parent.row-1, parent.column, q, map);
-      this.processNeighbor(parent, parent.row, parent.column+1, q, map);
-      this.processNeighbor(parent, parent.row, parent.column-1, q, map);
+      this.processNeighbor(parent, parent.row+1, parent.column, q );
+      this.processNeighbor(parent, parent.row-1, parent.column, q);
+      this.processNeighbor(parent, parent.row, parent.column+1, q);
+      this.processNeighbor(parent, parent.row, parent.column-1, q);
     }
     return response;
   }
 
-  private processNeighbor(parent: Cell, row: number, column: number, q : Cell[], map: Cell[][]){
+  private processNeighbor(parent: Cell, row: number, column: number, q : Cell[]){
     if(row < 0 || column < 0 || row >= this.rows || column >= this.columns) return;
-    let child = map[row][column];
+    let child = this.map[row][column];
     if(child.isVisited || child.isWall) return;
     child.parent = parent;
     q.push(child);
   }
+
+
 }
