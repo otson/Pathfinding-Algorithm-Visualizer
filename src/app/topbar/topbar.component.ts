@@ -17,10 +17,12 @@ export class TopbarComponent implements OnInit {
   }
 
   solveBreadthFirst() {
+    this.reset();
     this.animate(this.pathfinderService.solveBreadthFirst());
   }
 
   solveAStar() {
+    this.reset();
     this.animate((this.pathfinderService.solveAStar()));
   }
 
@@ -36,7 +38,7 @@ export class TopbarComponent implements OnInit {
           this.timeouts.push(setTimeout(function () {
             let cell = solution.path[j];
             let elem = document.getElementById(cell.column+"-"+cell.row);
-            elem?.classList.add('visited','path');
+            elem?.classList.add('path');
           }, 25 * i + 50 * j));
         }
       }
@@ -44,7 +46,12 @@ export class TopbarComponent implements OnInit {
   }
 
   reset() {
-    this.pathfinderService.setup();
+    this.pathfinderService.clear();
+    let visited = document.getElementsByClassName('visited');
+    while(visited.length > 0){
+      visited[0].classList.remove('path');
+      visited[0].classList.remove('visited');
+    }
     while(this.timeouts.length > 0){
       clearTimeout(this.timeouts.pop());
     }

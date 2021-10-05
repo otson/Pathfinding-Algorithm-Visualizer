@@ -15,6 +15,14 @@ export class PathfinderService {
     this.setup();
   }
 
+  public clear(){
+    for(let row of this.map){
+      for(let cell of row){
+        cell.isVisited = false;
+      }
+    }
+  }
+
   public setup(){
     this.map = [];
     for(let row = 0; row < this.rows; row++){
