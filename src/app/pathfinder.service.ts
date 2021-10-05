@@ -70,17 +70,17 @@ export class PathfinderService {
     while(openSet.length > 0){
       // get node with lowest f value;
       let curr = openSet[0];
+      for(let i = 1; i < openSet.length; i++){
+        if(fScore.get(curr) > fScore.get(openSet[i])){
+          curr = openSet[i];
+        }
+      }
       if(curr === end){
         while(curr.parent != undefined){
           response.path.push(curr);
           curr = curr.parent;
         }
         break;
-      }
-      for(let i = 1; i < openSet.length; i++){
-        if(fScore.get(curr) > fScore.get(openSet[i])){
-          curr = openSet[i];
-        }
       }
       openSet = openSet.filter((item) => item !== curr);
       for(let neighbor of getNeighbors(curr, this.map)){
