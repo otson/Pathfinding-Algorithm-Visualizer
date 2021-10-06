@@ -1,5 +1,5 @@
 div {
-  background-color: lightgrey;
+  background-color: white;
   color: transparent;
   user-select: none;
   -moz-user-select: none;
@@ -19,7 +19,26 @@ div {
 }
 
 .wall {
-  background-color: #242424;
+  background-color: #404040;
+  animation-name: wallAnimation;
+  animation-duration: 0.2s;
+  animation-timing-function: ease-out;
+  animation-delay: 0;
+  animation-direction: alternate;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+  outline: 1px solid #404040;
+}
+
+@keyframes wallAnimation {
+  0% {
+    transform: scale(1.15);
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }
 
 .visited:not(.start):not(.end) {

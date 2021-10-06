@@ -1,6 +1,6 @@
 <div (mousedown)="startPainting()" (mouseup)="stopPainting()">
   <app-topbar></app-topbar>
-  <table cellspacing="0" border="0" align="center" cellpadding="0">
+  <table cellspacing="1" border="0" align="center"  cellpadding="0" style="background-color: #a8a8a8">
     <tr *ngFor="let row of getMap()">
       <td *ngFor="let cell of row">
         <app-cell [column]="cell.column" [row]="cell.row"

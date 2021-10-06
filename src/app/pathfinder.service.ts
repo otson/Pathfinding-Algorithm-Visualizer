@@ -55,9 +55,15 @@ export class PathfinderService {
   }
 
   public solveAStar(): Response {
-    function heuristic(start: Cell) {
+    function manhattan(start: Cell) {
       return Math.abs(start.column - end.column) +
         Math.abs(start.row -end.row);
+    }
+    function euclidean(start: Cell) {
+      return Math.sqrt(
+        Math.pow(start.row - end.row, 2) +
+        Math.pow(start.column - end.column, 2)
+      )
     }
 
     function getNeighbors(curr: Cell, map: Cell[][]){
@@ -83,7 +89,7 @@ export class PathfinderService {
     }
     openSet.push(start);
     gScore.set(start, 0);
-    fScore.set(start, heuristic(start));
+    fScore.set(start, manhattan(start));
     while(openSet.length > 0){
       // get node with lowest f value;
       let curr = openSet[0];
@@ -106,7 +112,7 @@ export class PathfinderService {
         if(tentativeGScore < gScore.get(neighbor)){
           neighbor.parent = curr;
           gScore.set(neighbor, tentativeGScore);
-          fScore.set(neighbor, tentativeGScore + heuristic(neighbor));
+          fScore.set(neighbor, tentativeGScore + euclidean(neighbor));
           if(openSet.filter((item) => item === curr).length == 0){
             response.traversal.push(neighbor);
             openSet.push(neighbor);
