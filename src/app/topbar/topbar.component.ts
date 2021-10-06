@@ -17,6 +17,7 @@ export class TopbarComponent implements OnInit {
   }
 
   public generateMaze(){
+    this.resetPath();
     return this.pathfinderService.generateMaze();
   }
 
