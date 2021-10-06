@@ -8,8 +8,8 @@ import {MazeGeneratorService} from "./maze-generator.service";
 })
 export class PathfinderService {
 
-  private rows: number = 15;
-  private columns: number = 25;
+  private rows: number = 25;
+  private columns: number = 44;
   private map: Cell[][] = [];
 
   constructor(private mazeGeneratorService: MazeGeneratorService) {
