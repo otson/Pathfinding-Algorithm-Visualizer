@@ -179,16 +179,18 @@ export class PathfinderService {
 
 
   generateMaze() {
-    let start = this.getStart();
-    let maze = this.mazeGeneratorService.generateMaze(start.column, start.row, this.columns, this.rows);
-    console.log(maze);
-    for(let i = 1; i < this.map.length-1; i++){
-      for(let j = 1; j < this.map[i].length-1; j++) {
-        if(!this.map[i][j].isEnd && maze[i][j] != 0) continue;
-        if(maze[i][j] == 0) this.map[i][j+1].isWall = true;
-        if(maze[i][j] == 5) this.map[i+1][j].isWall = true;
-        if(maze[i][j] == 15) this.map[i-1][j].isWall = true;
-        if(maze[i][j] == 20) this.map[i][j-1].isWall = true;
+    let generating = true;
+    while (generating) {
+      let maze = this.mazeGeneratorService.generateMaze(this.columns, this.rows);
+      for (let i = 0; i < this.map.length; i++) {
+        for (let j = 0; j < this.map[i].length; j++) {
+          if (!this.map[i][j].isEnd && !this.map[i][j].isStart) {
+            this.map[i][j].isWall = maze[i][j] == 1;
+          }
+        }
+
+        this.clear();
+        generating = this.solveBreadthFirst().path.length == 0;
       }
     }
   }
