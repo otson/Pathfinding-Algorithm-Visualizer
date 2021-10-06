@@ -21,12 +21,12 @@ export class TopbarComponent implements OnInit {
   }
 
   solveBreadthFirst() {
-    this.reset();
+    this.resetPath();
     this.animate(this.pathfinderService.solveBreadthFirst());
   }
 
   solveAStar() {
-    this.reset();
+    this.resetPath();
     this.animate((this.pathfinderService.solveAStar()));
   }
 
@@ -49,7 +49,7 @@ export class TopbarComponent implements OnInit {
     }
   }
 
-  reset() {
+  resetPath() {
     this.pathfinderService.clear();
     let visited = document.getElementsByClassName('visited');
     while(visited.length > 0){
@@ -60,6 +60,12 @@ export class TopbarComponent implements OnInit {
       clearTimeout(this.timeouts.pop());
     }
   }
-
-
+  resetWalls() {
+    this.pathfinderService.clearWalls();
+    this.resetPath();
+    let walls = document.getElementsByClassName('wall');
+    while(walls.length > 0){
+      walls[0].classList.remove('wall');
+    }
+  }
 }

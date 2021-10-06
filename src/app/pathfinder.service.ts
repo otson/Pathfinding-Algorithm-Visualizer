@@ -24,6 +24,14 @@ export class PathfinderService {
     }
   }
 
+  public clearWalls(){
+    for(let row of this.map){
+      for(let cell of row){
+        cell.isWall = false;
+      }
+    }
+  }
+
   public setup(){
     this.map = [];
     for(let row = 0; row < this.rows; row++){
