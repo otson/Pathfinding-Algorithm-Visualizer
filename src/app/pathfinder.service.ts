@@ -63,15 +63,29 @@ export class PathfinderService {
       return Math.sqrt(
         Math.pow(start.row - end.row, 2) +
         Math.pow(start.column - end.column, 2)
-      )
+      ) //;+ 0.0001 * start.row + 0.00001 * start.column;
+    }
+
+    function diagonal(start: Cell) {
+      let dx = Math.abs(start.column - end.column);
+      let dy = Math.abs(start.row -end.row);
+      let D = 1;
+      let D2 = Math.sqrt(2);
+      return D * (dx+dy) + (D2 - 2 * D) * Math.min(dx, dy);
     }
 
     function getNeighbors(curr: Cell, map: Cell[][]){
       let neighbors = [];
+
+      if(curr.row > 0 && curr.column > 0) neighbors.push(map[curr.row-1][curr.column-1]);
       if(curr.row > 0) neighbors.push(map[curr.row-1][curr.column]);
-      if(curr.row < map.length - 1) neighbors.push(map[curr.row+1][curr.column]);
-      if(curr.column > 0) neighbors.push(map[curr.row][curr.column-1]);
+      if(curr.row > 0 && curr.column < map[0].length -1) neighbors.push(map[curr.row-1][curr.column+1]);
       if(curr.column < map[0].length - 1) neighbors.push(map[curr.row][curr.column+1]);
+      if(curr.row < map.length-1 && curr.column < map[0].length - 1) neighbors.push(map[curr.row+1][curr.column+1]);
+      if(curr.row < map.length-1) neighbors.push(map[curr.row+1][curr.column]);
+      if(curr.row < map.length-1 && curr.column > 0) neighbors.push(map[curr.row+1][curr.column-1]);
+      if(curr.column > 0) neighbors.push(map[curr.row][curr.column-1]);
+
       return neighbors;
     }
 
@@ -89,7 +103,7 @@ export class PathfinderService {
     }
     openSet.push(start);
     gScore.set(start, 0);
-    fScore.set(start, manhattan(start));
+    fScore.set(start, euclidean(start));
     while(openSet.length > 0){
       // get node with lowest f value;
       let curr = openSet[0];
@@ -108,11 +122,11 @@ export class PathfinderService {
       openSet = openSet.filter((item) => item !== curr);
       for(let neighbor of getNeighbors(curr, this.map)){
         if(neighbor.isWall) continue;
-        let tentativeGScore = gScore.get(curr) + 1;
+        let tentativeGScore = gScore.get(curr) + ((curr.column === neighbor.column || curr.row === neighbor.row) ? 1 : Math.sqrt(2));
         if(tentativeGScore < gScore.get(neighbor)){
           neighbor.parent = curr;
           gScore.set(neighbor, tentativeGScore);
-          fScore.set(neighbor, tentativeGScore + manhattan(neighbor)-1);
+          fScore.set(neighbor, tentativeGScore + euclidean(neighbor));
           if(openSet.filter((item) => item === curr).length == 0){
             response.traversal.push(neighbor);
             openSet.push(neighbor);
