@@ -54,7 +54,7 @@ export class PathfinderService {
     return this.map;
   }
 
-  public solveAStar(): Response {
+  public solveAStar(diagonalMovement: boolean): Response {
     function manhattan(start: Cell) {
       return Math.abs(start.column - end.column) +
         Math.abs(start.row -end.row);
@@ -73,19 +73,21 @@ export class PathfinderService {
       let D2 = Math.sqrt(2);
       return D * (dx+dy) + (D2 - 2 * D) * Math.min(dx, dy);
     }
+    let h = diagonalMovement ? euclidean : manhattan;
 
-    function getNeighbors(curr: Cell, map: Cell[][]){
+    function getNeighbors(curr: Cell, map: Cell[][], diagonalMovement: boolean){
       let neighbors = [];
-
-      if(curr.row > 0 && curr.column > 0) neighbors.push(map[curr.row-1][curr.column-1]);
       if(curr.row > 0) neighbors.push(map[curr.row-1][curr.column]);
-      if(curr.row > 0 && curr.column < map[0].length -1) neighbors.push(map[curr.row-1][curr.column+1]);
       if(curr.column < map[0].length - 1) neighbors.push(map[curr.row][curr.column+1]);
-      if(curr.row < map.length-1 && curr.column < map[0].length - 1) neighbors.push(map[curr.row+1][curr.column+1]);
       if(curr.row < map.length-1) neighbors.push(map[curr.row+1][curr.column]);
-      if(curr.row < map.length-1 && curr.column > 0) neighbors.push(map[curr.row+1][curr.column-1]);
       if(curr.column > 0) neighbors.push(map[curr.row][curr.column-1]);
 
+      if(diagonalMovement){
+        if(curr.row > 0 && curr.column > 0) neighbors.push(map[curr.row-1][curr.column-1]);
+        if(curr.row > 0 && curr.column < map[0].length -1) neighbors.push(map[curr.row-1][curr.column+1]);
+        if(curr.row < map.length-1 && curr.column < map[0].length - 1) neighbors.push(map[curr.row+1][curr.column+1]);
+        if(curr.row < map.length-1 && curr.column > 0) neighbors.push(map[curr.row+1][curr.column-1]);
+      }
       return neighbors;
     }
 
@@ -103,7 +105,7 @@ export class PathfinderService {
     }
     openSet.push(start);
     gScore.set(start, 0);
-    fScore.set(start, euclidean(start));
+    fScore.set(start, h(start));
     while(openSet.length > 0){
       // get node with lowest f value;
       let curr = openSet[0];
@@ -120,13 +122,13 @@ export class PathfinderService {
         break;
       }
       openSet = openSet.filter((item) => item !== curr);
-      for(let neighbor of getNeighbors(curr, this.map)){
+      for(let neighbor of getNeighbors(curr, this.map, diagonalMovement)){
         if(neighbor.isWall) continue;
         let tentativeGScore = gScore.get(curr) + ((curr.column === neighbor.column || curr.row === neighbor.row) ? 1 : Math.sqrt(2));
         if(tentativeGScore < gScore.get(neighbor)){
           neighbor.parent = curr;
           gScore.set(neighbor, tentativeGScore);
-          fScore.set(neighbor, tentativeGScore + euclidean(neighbor));
+          fScore.set(neighbor, tentativeGScore + h(neighbor));
           if(openSet.filter((item) => item === curr).length == 0){
             response.traversal.push(neighbor);
             openSet.push(neighbor);
@@ -142,7 +144,7 @@ export class PathfinderService {
    * Takes as an input a 2D grid of cells for which a path is to be found.
    * Returns an array of cells in the order in which they were visited when solving.
    */
-  public solveBreadthFirst(): Response{
+  public solveBreadthFirst(diagonalMovement: boolean): Response{
     const response = new Response();
     let start: Cell = this.getStart();
     for(let i = 0; i < this.map.length; i++){
@@ -170,10 +172,12 @@ export class PathfinderService {
       this.processNeighbor(parent, parent.row, parent.column+1, q);
       this.processNeighbor(parent, parent.row+1, parent.column, q);
       this.processNeighbor(parent, parent.row, parent.column-1, q);
-      /*this.processNeighbor(parent, parent.row-1, parent.column-1, q);
-      this.processNeighbor(parent, parent.row-1, parent.column+1, q);
-      this.processNeighbor(parent, parent.row+1, parent.column+1, q);
-      this.processNeighbor(parent, parent.row+1, parent.column-1, q);*/
+      if(diagonalMovement){
+        this.processNeighbor(parent, parent.row-1, parent.column-1, q);
+        this.processNeighbor(parent, parent.row-1, parent.column+1, q);
+        this.processNeighbor(parent, parent.row+1, parent.column+1, q);
+        this.processNeighbor(parent, parent.row+1, parent.column-1, q);
+      }
     }
     return response;
   }
@@ -221,7 +225,7 @@ export class PathfinderService {
         }
 
         this.clear();
-        generating = this.solveBreadthFirst().path.length == 0;
+        generating = this.solveBreadthFirst(false).path.length == 0;
       }
     }
   }

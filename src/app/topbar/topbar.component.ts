@@ -13,6 +13,8 @@ export class TopbarComponent implements OnInit {
 
   private timeouts: number[] = [];
 
+  public diagonalMovement = false;
+
   ngOnInit(): void {
   }
 
@@ -23,12 +25,12 @@ export class TopbarComponent implements OnInit {
 
   solveBreadthFirst() {
     this.resetPath();
-    this.animate(this.pathfinderService.solveBreadthFirst());
+    this.animate(this.pathfinderService.solveBreadthFirst(this.diagonalMovement));
   }
 
   solveAStar() {
     this.resetPath();
-    this.animate((this.pathfinderService.solveAStar()));
+    this.animate((this.pathfinderService.solveAStar(this.diagonalMovement)));
   }
 
   private animate(solution: Response){
@@ -68,5 +70,10 @@ export class TopbarComponent implements OnInit {
     while(walls.length > 0){
       walls[0].classList.remove('wall');
     }
+  }
+
+  onDiagonalToggle(checked: boolean) {
+    console.log(checked);
+    this.diagonalMovement = checked;
   }
 }

@@ -43,5 +43,12 @@
         <button style="width: 100px" (click)="resetWalls()">Reset Walls</button>
       </td>
     </tr>
+    <tr>
+      <td>
+        <input #diagonal type="checkbox" id="diagonal" name="diagonal"
+        [checked]="diagonalMovement" (change)="onDiagonalToggle(diagonal.checked)">
+        <label for="diagonal">Allow Diagonal Movement</label>
+      </td>
+    </tr>
   </table>
 </div>
