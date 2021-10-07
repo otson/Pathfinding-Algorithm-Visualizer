@@ -30,7 +30,7 @@ div {
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
   animation-play-state: running;
-  outline: 2px solid #404040;
+  outline: 1px solid #404040;
 }
 
 @keyframes wallAnimation {
@@ -43,7 +43,7 @@ div {
   }
 }
 
-.visited:not(.start):not(.end) {
+.visited:not(.start):not(.end):not(.wall) {
   animation-name: visitedAnimation;
   animation-duration: 0.5s;
   animation-timing-function: ease-out;
@@ -54,7 +54,7 @@ div {
   animation-play-state: running;
 }
 
-.path:not(.start):not(.end) {
+.path:not(.start):not(.end):not(.wall) {
   animation-name: pathAnimation;
   animation-duration: 0.75s;
   animation-timing-function: ease-in;

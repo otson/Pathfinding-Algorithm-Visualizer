@@ -112,7 +112,7 @@ export class PathfinderService {
         if(tentativeGScore < gScore.get(neighbor)){
           neighbor.parent = curr;
           gScore.set(neighbor, tentativeGScore);
-          fScore.set(neighbor, tentativeGScore + manhattan(neighbor));
+          fScore.set(neighbor, tentativeGScore + manhattan(neighbor)-1);
           if(openSet.filter((item) => item === curr).length == 0){
             response.traversal.push(neighbor);
             openSet.push(neighbor);
