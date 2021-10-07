@@ -50,7 +50,7 @@ export class TopbarComponent implements OnInit {
         }
       }
     }
-    console.log(this.pathfinderService.lines);
+
     this.pathfinderService.lines = [];
     for(let i = 1; i < solution.path.length; i++){
       let start = document.getElementById(solution.path[i-1].column+"-"+solution.path[i-1].row)!;
@@ -65,7 +65,6 @@ export class TopbarComponent implements OnInit {
         }
       )
     }
-    console.log(this.pathfinderService.lines);
   }
 
   resetPath() {

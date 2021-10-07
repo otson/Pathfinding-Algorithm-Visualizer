@@ -1,24 +1,29 @@
 <div (mousedown)="startPainting()" (mouseup)="stopPainting()">
-  <app-topbar></app-topbar>
-  <table cellspacing="1" border="0" align="center"  cellpadding="0" style="background-color: #a8a8a8">
-    <tr *ngFor="let row of getMap()">
-      <td *ngFor="let cell of row">
-        <app-cell [column]="cell.column" [row]="cell.row"
-                  [isStart]="cell.isStart"
-                  [isEnd]="cell.isEnd"
-                  [isWall]="cell.isWall"
-        ></app-cell>
-      </td>
-    </tr>
-  </table>
+  <div>
+    <div style="position: absolute; z-index: 999; pointer-events: none; width: 100%;
+  height: 100%;">
+      <svg width="100%" height="100%">
+        <line *ngFor="let line of getLines()" class="line" stroke="black" stroke-width="5"
+              [attr.x1]="line.x1" [attr.y1]="line.y1" [attr.x2]="line.x2" [attr.y2]="line.y2"/>
+      </svg>
+    </div>
+    <app-topbar></app-topbar>
+    <table cellspacing="1" border="0" align="center"  cellpadding="0" style="background-color: #a8a8a8">
+      <tr *ngFor="let row of getMap()">
+        <td *ngFor="let cell of row">
+          <app-cell [column]="cell.column" [row]="cell.row"
+                    [isStart]="cell.isStart"
+                    [isEnd]="cell.isEnd"
+                    [isWall]="cell.isWall"
+          ></app-cell>
+        </td>
+      </tr>
+    </table>
+  </div>
+
   <div>
 
-  <div style="position: absolute; top:100px; left:100px; z-index: 999;">
-    <svg width="1800" height="800">
-      <line *ngFor="let line of getLines()" class="line" stroke="black" stroke-width="5"
-            [attr.x1]="line.x1" [attr.y1]="line.y1" [attr.x2]="line.x2" [attr.y2]="line.y2"/>
-    </svg>
-  </div>
+
 </div>
 
 
