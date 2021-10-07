@@ -19,6 +19,8 @@ div {
 }
 
 .wall {
+  position: relative;
+  z-index: 99;
   background-color: #404040;
   animation-name: wallAnimation;
   animation-duration: 0.2s;
@@ -28,7 +30,7 @@ div {
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
   animation-play-state: running;
-  outline: 1px solid #404040;
+  outline: 2px solid #404040;
 }
 
 @keyframes wallAnimation {
