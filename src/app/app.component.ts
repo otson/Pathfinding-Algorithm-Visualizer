@@ -9,7 +9,12 @@ import {PathfinderService} from "./pathfinder.service";
 })
 export class AppComponent {
 
+
   constructor(private appService: AppService, private pathfinderService: PathfinderService) {
+  }
+
+  public getLines() {
+    return this.pathfinderService.getLines();
   }
 
   public getMap(){

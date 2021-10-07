@@ -50,6 +50,22 @@ export class TopbarComponent implements OnInit {
         }
       }
     }
+    console.log(this.pathfinderService.lines);
+    this.pathfinderService.lines = [];
+    for(let i = 1; i < solution.path.length; i++){
+      let start = document.getElementById(solution.path[i-1].column+"-"+solution.path[i-1].row)!;
+      let end = document.getElementById(solution.path[i].column+"-"+solution.path[i].row)!;
+      console.log(start.offsetLeft + start.offsetWidth / 2+","+start.offsetTop + start.offsetHeight / 2);
+      this.pathfinderService.lines.push(
+        {
+          x1: start.getBoundingClientRect().left,
+          y1: start.getBoundingClientRect().top,
+          x2: end.getBoundingClientRect().left,
+          y2: end.getBoundingClientRect().top,
+        }
+      )
+    }
+    console.log(this.pathfinderService.lines);
   }
 
   resetPath() {

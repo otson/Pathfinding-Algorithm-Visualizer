@@ -8,6 +8,10 @@ import {MazeGeneratorService} from "./maze-generator.service";
 })
 export class PathfinderService {
 
+  lines = [ // here
+    {x1: 85.31, y1: 9.67, x2: 98.23, y2: 9.67 }
+  ];
+
   private rows: number = 25;
   private columns: number = 44;
   private map: Cell[][] = [];
@@ -228,5 +232,9 @@ export class PathfinderService {
         generating = this.solveBreadthFirst(false).path.length == 0;
       }
     }
+  }
+
+  getLines() {
+    return this.lines;
   }
 }
