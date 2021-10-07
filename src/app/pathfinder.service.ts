@@ -157,7 +157,6 @@ export class PathfinderService {
     q.push(start);
     while(q.length != 0){
       let parent: Cell = q.shift()!;
-      if(parent.isVisited) continue;
       parent.isVisited = true;
       response.traversal.push(parent);
       if(parent.isEnd) {
@@ -167,11 +166,14 @@ export class PathfinderService {
         }
         break;
       }
-
-      this.processNeighbor(parent, parent.row+1, parent.column, q );
       this.processNeighbor(parent, parent.row-1, parent.column, q);
       this.processNeighbor(parent, parent.row, parent.column+1, q);
+      this.processNeighbor(parent, parent.row+1, parent.column, q);
       this.processNeighbor(parent, parent.row, parent.column-1, q);
+      /*this.processNeighbor(parent, parent.row-1, parent.column-1, q);
+      this.processNeighbor(parent, parent.row-1, parent.column+1, q);
+      this.processNeighbor(parent, parent.row+1, parent.column+1, q);
+      this.processNeighbor(parent, parent.row+1, parent.column-1, q);*/
     }
     return response;
   }
@@ -201,6 +203,7 @@ export class PathfinderService {
     if(row < 0 || column < 0 || row >= this.rows || column >= this.columns) return;
     let child = this.map[row][column];
     if(child.isVisited || child.isWall) return;
+    child.isVisited = true;
     child.parent = parent;
     q.push(child);
   }
