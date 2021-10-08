@@ -33,6 +33,11 @@ export class TopbarComponent implements OnInit {
     this.animate((this.pathfinderService.solveAStar(this.diagonalMovement)));
   }
 
+  solveBestFirst() {
+    this.resetPath();
+    this.animate((this.pathfinderService.bestFirstSearch(this.diagonalMovement)));
+  }
+
   private animate(solution: Response){
     for(let i = 0; i < solution.traversal.length; i++){
       this.timeouts.push(setTimeout(function () {

@@ -24,6 +24,7 @@ export class PathfinderService {
     for(let row of this.map){
       for(let cell of row){
         cell.isVisited = false;
+        cell.isClosed = false;
       }
     }
   }
@@ -45,7 +46,7 @@ export class PathfinderService {
           new Cell(column, row,
             row == Math.trunc(this.rows / 2) && column == Math.trunc(this.columns / 4),
             row == Math.trunc(this.rows / 2) && column == Math.trunc(this.columns / 4 * 3),
-            false, undefined,
+            false, false, undefined,
             Math.trunc(this.rows / 4) < row && Math.trunc(this.rows / 4 * 3) > row && column == Math.trunc(this.columns / 2)
           )
         );
@@ -58,26 +59,26 @@ export class PathfinderService {
     return this.map;
   }
 
-  public solveAStar(diagonalMovement: boolean): Response {
-    function manhattan(start: Cell) {
-      return Math.abs(start.column - end.column) +
-        Math.abs(start.row -end.row);
-    }
-    function euclidean(start: Cell) {
-      return Math.sqrt(
-        Math.pow(start.row - end.row, 2) +
-        Math.pow(start.column - end.column, 2)
-      ) //;+ 0.0001 * start.row + 0.00001 * start.column;
-    }
+  private manhattan(start: Cell, end: Cell) {
+    return Math.abs(start.column - end.column) +
+      Math.abs(start.row -end.row);
+  }
+  private euclidean(start: Cell, end: Cell) {
+    return (Math.sqrt(
+      Math.pow(start.row - end.row, 2) +
+      Math.pow(start.column - end.column, 2)
+    )); //;+ 0.0001 * start.row + 0.00001 * start.column;
+  }
 
-    function diagonal(start: Cell) {
-      let dx = Math.abs(start.column - end.column);
-      let dy = Math.abs(start.row -end.row);
-      let D = 1;
-      let D2 = Math.sqrt(2);
-      return D * (dx+dy) + (D2 - 2 * D) * Math.min(dx, dy);
-    }
-    let h = diagonalMovement ? euclidean : manhattan;
+  public bestFirstSearch(diagonalMovement: boolean){
+    return this.solveAStar(diagonalMovement,
+      (start: Cell, end: Cell) => this.euclidean(start, end) * 1000000);
+  }
+
+  public solveAStar(diagonalMovement: boolean, heuristic? : (start: Cell, end: Cell) => number): Response {
+
+    let h = diagonalMovement ? this.euclidean : this.manhattan;
+    if(heuristic != undefined) h = heuristic;
 
     function getNeighbors(curr: Cell, map: Cell[][], diagonalMovement: boolean){
       let neighbors = [];
@@ -107,9 +108,10 @@ export class PathfinderService {
         fScore.set(this.map[row][column], Infinity);
       }
     }
+    start.isVisited = true;
     openSet.push(start);
     gScore.set(start, 0);
-    fScore.set(start, h(start));
+    fScore.set(start, h(start, end));
     while(openSet.length > 0){
       // get node with lowest f value;
       let curr = openSet[0];
@@ -118,6 +120,9 @@ export class PathfinderService {
           curr = openSet[i];
         }
       }
+      openSet = openSet.filter((item) => item !== curr);
+      curr.isClosed = true;
+
       if(curr === end){
         while(curr.parent != undefined){
           response.path.push(curr);
@@ -125,16 +130,19 @@ export class PathfinderService {
         }
         break;
       }
-      openSet = openSet.filter((item) => item !== curr);
       for(let neighbor of getNeighbors(curr, this.map, diagonalMovement)){
-        if(neighbor.isWall) continue;
+        if(neighbor.isWall || neighbor.isClosed) continue;
         let tentativeGScore = gScore.get(curr) + ((curr.column === neighbor.column || curr.row === neighbor.row) ? 1 : Math.sqrt(2));
-        if(tentativeGScore < gScore.get(neighbor)){
+        if(!neighbor.isVisited || tentativeGScore < gScore.get(neighbor)){
           neighbor.parent = curr;
           gScore.set(neighbor, tentativeGScore);
-          fScore.set(neighbor, tentativeGScore + h(neighbor));
-          if(openSet.filter((item) => item === curr).length == 0){
+          fScore.set(neighbor, tentativeGScore + h(neighbor, end));
+          if(!neighbor.isVisited){
             response.traversal.push(neighbor);
+            openSet.push(neighbor);
+            neighbor.isVisited = true;
+          } else{
+            openSet = openSet.filter((item) => item !== neighbor);
             openSet.push(neighbor);
           }
         }
