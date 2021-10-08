@@ -75,6 +75,10 @@ export class PathfinderService {
       (start: Cell, end: Cell) => this.euclidean(start, end) * 1000000);
   }
 
+  public depthFirstSearch(diagonalMovement: boolean){
+    return this.solveBreadthFirst(diagonalMovement, true);
+  }
+
   public solveAStar(diagonalMovement: boolean, heuristic? : (start: Cell, end: Cell) => number): Response {
 
     let h = diagonalMovement ? this.euclidean : this.manhattan;
@@ -156,7 +160,7 @@ export class PathfinderService {
    * Takes as an input a 2D grid of cells for which a path is to be found.
    * Returns an array of cells in the order in which they were visited when solving.
    */
-  public solveBreadthFirst(diagonalMovement: boolean): Response{
+  public solveBreadthFirst(diagonalMovement: boolean, dfs: boolean = false): Response{
     const response = new Response();
     let start: Cell = this.getStart();
     for(let i = 0; i < this.map.length; i++){
@@ -170,7 +174,7 @@ export class PathfinderService {
     let q: Cell[] = [];
     q.push(start);
     while(q.length != 0){
-      let parent: Cell = q.shift()!;
+      let parent: Cell = dfs ? q.pop()! : q.shift()!;
       parent.isVisited = true;
       response.traversal.push(parent);
       if(parent.isEnd) {
@@ -180,16 +184,14 @@ export class PathfinderService {
         }
         break;
       }
-      this.processNeighbor(parent, parent.row-1, parent.column, q);
       this.processNeighbor(parent, parent.row, parent.column+1, q);
+      if(diagonalMovement) this.processNeighbor(parent, parent.row+1, parent.column+1, q);
       this.processNeighbor(parent, parent.row+1, parent.column, q);
+      if(diagonalMovement) this.processNeighbor(parent, parent.row+1, parent.column -1, q);
       this.processNeighbor(parent, parent.row, parent.column-1, q);
-      if(diagonalMovement){
-        this.processNeighbor(parent, parent.row-1, parent.column-1, q);
-        this.processNeighbor(parent, parent.row-1, parent.column+1, q);
-        this.processNeighbor(parent, parent.row+1, parent.column+1, q);
-        this.processNeighbor(parent, parent.row+1, parent.column-1, q);
-      }
+      if(diagonalMovement) this.processNeighbor(parent, parent.row-1, parent.column -1, q);
+      this.processNeighbor(parent, parent.row-1, parent.column, q);
+      if(diagonalMovement) this.processNeighbor(parent, parent.row-1, parent.column +1, q);
     }
     return response;
   }
