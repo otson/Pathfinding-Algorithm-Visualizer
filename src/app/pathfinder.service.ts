@@ -20,7 +20,7 @@ export class PathfinderService {
 
   public diagonalMovement = false;
 
-  public algorithmDescription = "Select an algorithm from the downdown menu.";
+  public algorithmDescription = "Select an algorithm from the downdown menu. Draw walls with mouse.";
   public selectedAlgorithm = '';
 
   constructor(private mazeGeneratorService: MazeGeneratorService) {
