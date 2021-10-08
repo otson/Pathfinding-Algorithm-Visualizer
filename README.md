@@ -4,7 +4,9 @@ Visually demonstrates implementations of various pathfinding algorithms.
 
 These include:
 * Breadth First Search (BFS)
-* A Star
+* Best First Search
+* A Star (A*)
+* Depth First Search (DFS)
 
 ## Live Demo
 
