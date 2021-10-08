@@ -1,14 +1,8 @@
-<div>
-  <table>
+<div style="position: center; width: 90%;">
+  <table class="center">
     <tr>
-
       <td>
         <app-button-dropdown></app-button-dropdown>
-      </td>
-      <td>
-        <input #diagonal type="checkbox" id="diagonal" name="diagonal"
-               [checked]="pathfinderService.diagonalMovement" (change)="onDiagonalToggle(diagonal.checked)">
-        <label for="diagonal">Diagonal Movement</label>
       </td>
       <td>
         <button class="executebtn" (click)="pathfinderService.execute()">Visualize!</button>
@@ -23,24 +17,35 @@
         <button class="btn" (click)="resetWalls()">Reset Walls</button>
       </td>
       <td>
-        <div style="background-color: darkorange; height: 50px; width: 50px;
+        <div style="user-select: none;-moz-user-select:none; background-color: transparent; height: 50px; width: 100px;
+        text-align: center;vertical-align: middle;line-height: 50px"> </div>
+      </td>
+      <td>
+        <div style="user-select: none;-moz-user-select:none; background-color: darkorange; height: 50px; width: 65px;
         text-align: center;vertical-align: middle;line-height: 50px">Start</div>
       </td>
       <td>
-        <div style="background-color: mediumpurple; height: 50px; width: 50px;
+        <div style="user-select: none;-moz-user-select: none;background-color: mediumpurple; height: 50px; width: 65px;
         text-align: center;vertical-align: middle;line-height: 50px">Target</div>
       </td>
       <td>
-        <div style="background-color: rgba(90, 245, 56, 0.75); height: 50px; width: 50px;
+        <div style="user-select: none;-moz-user-select: none;background-color: rgba(90, 245, 56, 0.75); height: 50px; width: 65px;
         text-align: center;vertical-align: middle;line-height: 50px">Search</div>
       </td>
       <td>
-        <div style="background-color: #404040; color: white; height: 50px; width: 50px;
+        <div style="user-select: none;-moz-user-select: none;background-color: #404040; color: white; height: 50px; width: 65px;
         text-align: center;vertical-align: middle;line-height: 50px">Wall</div>
       </td>
       <td>
-        <div style="background-color: deepskyblue; height: 50px; width: 50px;
+        <div style="user-select: none;-moz-user-select: none;background-color: deepskyblue; height: 50px; width: 65px;
         text-align: center;vertical-align: middle;line-height: 50px">Path</div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input #diagonal type="checkbox" id="diagonal" name="diagonal"
+               [checked]="pathfinderService.diagonalMovement" (change)="onDiagonalToggle(diagonal.checked)">
+        <label for="diagonal" style="text-align: left">Allow Diagonal Movement</label>
       </td>
     </tr>
   </table>
