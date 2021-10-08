@@ -65,7 +65,6 @@ export class TopbarComponent implements OnInit {
     for(let i = 1; i < solution.path.length; i++){
       let start = document.getElementById(solution.path[i-1].column+"-"+solution.path[i-1].row)!;
       let end = document.getElementById(solution.path[i].column+"-"+solution.path[i].row)!;
-      console.log(start.offsetLeft + start.offsetWidth / 2+","+start.offsetTop + start.offsetHeight / 2);
       this.pathfinderService.lines.push(
         {
           x1: start.getBoundingClientRect().left,
@@ -98,7 +97,6 @@ export class TopbarComponent implements OnInit {
   }
 
   onDiagonalToggle(checked: boolean) {
-    console.log(checked);
     this.diagonalMovement = checked;
   }
 }
