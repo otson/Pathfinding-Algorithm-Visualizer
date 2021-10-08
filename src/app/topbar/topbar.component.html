@@ -46,7 +46,7 @@
     <tr>
       <td>
         <input #diagonal type="checkbox" id="diagonal" name="diagonal"
-        [checked]="diagonalMovement" (change)="onDiagonalToggle(diagonal.checked)">
+        [checked]="pathfinderService.diagonalMovement" (change)="onDiagonalToggle(diagonal.checked)">
         <label for="diagonal">Allow Diagonal Movement</label>
       </td>
     </tr>
