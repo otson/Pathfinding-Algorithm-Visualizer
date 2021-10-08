@@ -15,21 +15,7 @@ export class TopbarComponent {
     return this.pathfinderService.generateMaze();
   }
 
-  solveBreadthFirst() {
-    this.pathfinderService.solveBreadthFirst();
-  }
 
-  solveAStar() {
-    this.pathfinderService.solveAStar();
-  }
-
-  solveBestFirst() {
-    this.pathfinderService.solveBestFirst();
-  }
-
-  solveDepthFirst() {
-    this.pathfinderService.solveDepthFirst();
-  }
 
   resetPath() {
     this.pathfinderService.resetPath();
