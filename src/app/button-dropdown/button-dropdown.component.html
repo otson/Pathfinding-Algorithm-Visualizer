@@ -1,4 +1,10 @@
-<button style="width: 100px" (click)="solveBreadthFirst()">BFS</button>
-<button style="width: 100px" (click)="solveAStar()">A*</button>
-<button style="width: 100px" (click)="solveBestFirst()">Best First</button>
-<button style="width: 100px" (click)="solveDepthFirst()">DFS</button>
+<div class="dropdown">
+  <button class="dropbtn">Algorithms <i class="arrow down"></i></button>
+  <div class="dropdown-content">
+    <a href="#" (click)="selectBFS()">BFS</a>
+    <a href="#" (click)="selectAStar()">A*</a>
+    <a href="#" (click)="selectBestFirst()">Best First</a>
+    <a href="#" (click)="selectDFS()">DFS</a>
+  </div>
+</div>
+

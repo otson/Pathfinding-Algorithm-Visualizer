@@ -1,3 +1,31 @@
 div {
   display:inline-block;
 }
+.executebtn {
+  background-color: #ff8989;
+  color: black;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.executebtn:hover {
+  background-color: #dc5d5d;
+}
+
+.btn {
+  background-color: #abb7f6;
+  color: black;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+.btn:hover {
+  background-color: #7a8ee5;
+
+}
+

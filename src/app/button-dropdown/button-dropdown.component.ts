@@ -8,7 +8,7 @@ import {PathfinderService} from "../pathfinder.service";
 })
 export class ButtonDropdownComponent implements OnInit {
 
-  constructor(private pathfinderService: PathfinderService) { }
+  constructor(public pathfinderService: PathfinderService) { }
 
   ngOnInit(): void {
   }
@@ -29,4 +29,27 @@ export class ButtonDropdownComponent implements OnInit {
     this.pathfinderService.solveDepthFirst();
   }
 
+  selectBFS() {
+    this.pathfinderService.algorithmDescription =
+      "Breadth First Search (BFS) selected."
+    this.pathfinderService.selectedAlgorithm ="bfs";
+  }
+
+  selectAStar() {
+    this.pathfinderService.algorithmDescription =
+      "A Star (A*) selected."
+    this.pathfinderService.selectedAlgorithm ="a*";
+  }
+
+  selectBestFirst() {
+    this.pathfinderService.algorithmDescription =
+      "Best First Search selected."
+    this.pathfinderService.selectedAlgorithm ="bestFirst";
+  }
+
+  selectDFS() {
+    this.pathfinderService.algorithmDescription =
+      "Depth First Search (DFS) selected."
+    this.pathfinderService.selectedAlgorithm ="dfs";
+  }
 }

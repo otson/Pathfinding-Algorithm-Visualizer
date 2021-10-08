@@ -15,8 +15,6 @@ export class TopbarComponent {
     return this.pathfinderService.generateMaze();
   }
 
-
-
   resetPath() {
     this.pathfinderService.resetPath();
   }

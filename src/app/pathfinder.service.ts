@@ -20,8 +20,18 @@ export class PathfinderService {
 
   public diagonalMovement = false;
 
+  public algorithmDescription = "Select an algorithm from the downdown menu.";
+  public selectedAlgorithm = '';
+
   constructor(private mazeGeneratorService: MazeGeneratorService) {
     this.setup();
+  }
+
+  execute() {
+    if(this.selectedAlgorithm == 'bfs') this.solveBreadthFirst();
+    if(this.selectedAlgorithm == 'dfs') this.solveDepthFirst();
+    if(this.selectedAlgorithm == 'bestFirst') this.solveBestFirst();
+    if(this.selectedAlgorithm == 'a*') this.solveAStar();
   }
 
   private animate(solution: Response) {
@@ -315,4 +325,5 @@ export class PathfinderService {
   getLines() {
     return this.lines;
   }
+
 }
