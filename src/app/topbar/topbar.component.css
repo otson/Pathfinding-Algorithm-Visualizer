@@ -1,6 +1,9 @@
 div {
   display:inline-block;
 }
+td {
+  display:inline-block;
+}
 .executebtn {
   background-color: #ff8989;
   color: black;
@@ -14,7 +17,6 @@ div {
 .executebtn:hover:not(.btn-disabled) {
   background-color: #dc5d5d;
 }
-
 
 .btn-disabled{
   background-color: lightgrey;
