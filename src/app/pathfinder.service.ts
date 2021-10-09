@@ -24,6 +24,11 @@ export class PathfinderService {
   public selectedAlgorithm = '';
 
   constructor(private mazeGeneratorService: MazeGeneratorService) {
+    const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+    const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+    this.columns = Math.floor((0.9*vw) / 30);
+    this.rows = Math.floor((0.8*vh) / 30);
+    console.log(vw, vh);
     this.setup();
   }
 

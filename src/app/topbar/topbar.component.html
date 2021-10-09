@@ -5,7 +5,7 @@
         <app-button-dropdown></app-button-dropdown>
       </td>
       <td>
-        <button class="executebtn" (click)="pathfinderService.execute()">Visualize!</button>
+        <button class="executebtn" [ngClass]="{'btn-disabled': pathfinderService.selectedAlgorithm == '' }" (click)="pathfinderService.execute()">Visualize!</button>
       </td>
       <td>
         <button class="btn" (click)="generateMaze()">Generate Maze</button>

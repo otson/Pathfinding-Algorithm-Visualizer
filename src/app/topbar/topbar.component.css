@@ -11,8 +11,16 @@ div {
   font-weight: bold;
 }
 
-.executebtn:hover {
+.executebtn:hover:not(.btn-disabled) {
   background-color: #dc5d5d;
+}
+
+
+.btn-disabled{
+  background-color: lightgrey;
+  user-select: none;
+  -moz-user-select: none;
+  cursor: no-drop;
 }
 
 .btn {
